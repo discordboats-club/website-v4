@@ -1,2 +1,1 @@
-# bulmaboats
-dboats with bulma
+# discordboats (wip)
