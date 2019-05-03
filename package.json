@@ -1,0 +1,28 @@
+{
+    "name": "bulmaboats",
+    "version": "1.0.0",
+    "description": "Hello! This is another website.",
+    "main": "index.js",
+    "author": "RONTheCookie",
+    "license": "MIT",
+    "dependencies": {
+        "autoprefixer": "^9.5.1",
+        "ejs": "^2.6.1",
+        "express": "^4.16.3",
+        "helmet": "^3.16.0",
+        "node-sass": "^4.12.0",
+        "postcss-cli": "^6.1.2",
+        "rethinkdbdash": "^2.3.31"
+    },
+    "scripts": {
+        "start": "node .",
+        "css-build": "node-sass --omit-source-map-url assets/sass/style.scss static/style.css",
+        "css-watch": "npm run css-build -- --watch",
+        "server-watch": "forever -w index.js",
+        "dev": "concurrently npm:server-watch npm:css-watch"
+    },
+    "devDependencies": {
+        "concurrently": "^4.1.0",
+        "forever": "^1.0.0"
+    }
+}

@@ -1,0 +1,17 @@
+@charset "utf-8";
+@import "bulma.scss";
+.input::placeholder,
+.textarea::placeholder {
+    color: white;
+}
+* {
+    color: white;
+}
+
+.input,
+.textarea,
+.select,
+select {
+    background-color: transparent !important;
+    color: white !important;
+}
