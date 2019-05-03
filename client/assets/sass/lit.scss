@@ -1,0 +1,120 @@
+/*
+* Lit v0.1
+*
+* Ported to SCSS by ronthecookie, original made by github.com/ajusa
+*/
+
+
+* + *{
+    box-sizing: border-box;
+    margin: .5em 0;
+}
+
+@media(min-width:35em) {
+    .col {
+        display: table-cell;
+    }
+    .\31 {
+        width: 5%;
+    }
+    .\33 {
+        width: 22%;
+    }
+    .\34 {
+        width: 30%;
+    }
+    .\35 {
+        width: 40%;
+    }
+    .\32 {
+        width: 15%;
+    }
+    .row {
+        display: table;
+        border-spacing: 1em 0;
+    }
+}
+
+.w-100,
+.row {
+    width: 100%;
+}
+
+.card:focus,
+hr {
+    outline: 0;
+    border: solid $primary-color;
+}
+
+.card,
+pre {
+    padding: 1em;
+    border: solid $light;
+}
+
+a:hover,
+.btn:hover {
+    opacity: .6;
+}
+
+.c {
+    max-width: 60em;
+    padding: 1em;
+    margin: auto;
+    font: 1em/1.6 $font;
+}
+
+h6 {
+    font: 300 1em $font;
+}
+
+h5 {
+    font: 300 1.2em $font;
+}
+
+h3 {
+    font: 300 2em $font;
+}
+
+h4 {
+    font: 300 1.5em $font;
+}
+
+h2 {
+    font: 300 2.2em $font;
+}
+
+h1 {
+    font: 300 2.5em $font;
+}
+
+a {
+    color: $primary-color;
+    text-decoration: none;
+}
+
+.btn.primary {
+    color: white;
+    background: $primary-color;
+    border: solid $primary-color;
+}
+
+pre {
+    overflow: auto;
+}
+
+td,
+th {
+    padding: 1em;
+    text-align: left;
+    border-bottom: solid $light;
+}
+
+.btn {
+    padding: 1em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: white;
+    border: solid;
+    font: .7em $font;
+}
