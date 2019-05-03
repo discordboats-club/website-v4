@@ -15,7 +15,7 @@
         "rethinkdbdash": "^2.3.31"
     },
     "scripts": {
-        "start": "node .",
+        "start": "yarn run css-build && node .",
         "css-build": "node-sass --omit-source-map-url assets/sass/style.scss static/style.css",
         "css-watch": "npm run css-build -- --watch",
         "server-watch": "forever -w index.js",
