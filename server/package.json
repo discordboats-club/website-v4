@@ -13,7 +13,8 @@
     "morgan": "^1.9.0",
     "node-fetch": "^2.2.0",
     "randomstring": "^1.1.5",
-    "rethinkdbdash": "^2.3.31"
+    "rethinkdbdash": "^2.3.31",
+    "setimmediate": "^1.0.5"
   },
   "scripts": {
     "start": "node index.js"
