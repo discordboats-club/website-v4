@@ -16,7 +16,7 @@ client.login(config.token);
 app.enable('trust proxy');
 app.use(require('cloudflare-express').restore()); // so we can get their real ip
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }), async (req, res, next) => {
