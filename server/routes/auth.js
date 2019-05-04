@@ -17,7 +17,7 @@ router.get('/callback', async (req, res) => {
   method: 'POST',
   headers: {
     'Authorization': `Basic ${creds}`,
-    'User-Agent': 'discordboats.club/2.0 (https://discordboats.club)',
+    'User-Agent': 'discordboats.club/4.0 (https://github.com/discordboats-club/website-v4)',
     'Content-Type': 'application/x-www-form-urlencoded'
   }
   });
