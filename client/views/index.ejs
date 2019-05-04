@@ -1,36 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>discordboats</title>
-        <link rel="stylesheet" href="/style.css" />
-        <link
-            rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css"
-            integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm"
-            crossorigin="anonymous"
-        />
-        <link
-            rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css"
-            integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq"
-            crossorigin="anonymous"
-        />
-        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <%- include("parts/head.ejs"); %>
     </head>
     <body>
-        <nav class="bg-accent pv2 ph2 row">
-            <div class="col-xs">
-                <a href="/"><img src="/logo.png" class="navbar-img"/></a>
-            </div>
-            <div class="col-xs-1">
-                <a href="/login" class="white ph2">
-                    <i class="fas fa-sign-in-alt ph1"></i>
-                    login</a>
-            </div>
-        </nav>
+        <%- include("parts/nav.ejs") %>
     </body>
 </html>
