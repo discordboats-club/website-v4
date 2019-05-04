@@ -1,7 +1,7 @@
+require('dotenv').config();
 var express = require('express');
 var fs = require('fs');
 var logger = require('morgan');
-var config = require('./config.json');
 
 var app = express();
 
@@ -11,7 +11,7 @@ const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('jwt.key').toString();
 const PORT = process.env.PORT || 3001;
 
 var client = require('./client.js');
-client.login(config.token);
+client.login(process.env.DISCORD_CLIENT_TOKEN);
 
 app.enable('trust proxy');
 app.use(require('cloudflare-express').restore()); // so we can get their real ip
@@ -26,6 +26,22 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
   next();
 });
 
+// TODO: improve error responses, use 204 when supposed to
+// TODO: revamp permission system
+// TODO: use JWT for bot api keys
+// TODO: add endpoint to regen api key
+// TODO: use camelCase for schema file names
+// TODO: route files are too long - let's organise the endpoints
+// TODO: bot upvotes
+// TODO: GDPR request data endpoint
+// TODO: more API libraries?
+// TODO: search bots
+// TODO: manage todo list better
+// TODO: PATCH /users/@me
+// TODO: bot tags
+// TODO: add featured true/false to PATCH /bots
+// TODO: api docs
+// TODO: discord bot lookup features
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/bots', require('./routes/bots.js'));
 app.use('/api/users', require('./routes/users.js'));

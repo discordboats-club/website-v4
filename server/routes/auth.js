@@ -1,5 +1,4 @@
 var express = require('express');
-var config = require('../config.json');
 var jwt = require('jsonwebtoken');
 var fetch = require('node-fetch');
 var btoa = require('btoa');
@@ -7,12 +6,12 @@ const { r, JWT_KEY } = require('../');
 
 var router = module.exports = express.Router();
 
-router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify%20email&prompt=none`));
+router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.OAUTH_CALLBACK_URL)}&response_type=code&scope=identify%20email&prompt=none`));
 
 router.get('/callback', async (req, res) => {
   if (!req.query.code) return res.sendStatus(400);
-  let creds = btoa(`${config.clientID}:${config.clientSecret}`);
-  let accessResponse = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${encodeURIComponent(config.callbackURL)}`,
+  let creds = btoa(`${process.env.DISCORD_CLIENT_ID}:${process.env.DISCORD_CLIENT_SECRET}`);
+  let accessResponse = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${encodeURIComponent(process.env.OAUTH_CALLBACK_URL)}`,
   {
   method: 'POST',
   headers: {
@@ -65,5 +64,5 @@ router.get('/callback', async (req, res) => {
   }
   
   const JWT_TOKEN = await jwt.sign(user.id, JWT_KEY);
-  res.send(`<script>opener.postMessage('${JWT_TOKEN}', '${config.assetURL + '/dashboard'}'); close();</script>`);
+  // TODO: respond with token
 });

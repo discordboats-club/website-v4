@@ -6,7 +6,6 @@ var { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = requir
 var { editBotLimiter } = require('../ratelimits.js');
 var { r } = require('../');
 var client = require('../client.js');
-var config = require('../config.json');
 
 var router = module.exports = express.Router();
 
@@ -49,8 +48,8 @@ router.post('/', async (req, res) => {
 
   await r.table('bots').insert(bot);
 
-  let botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
-  let modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
+  let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
+  let modRole = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).roles.find(r => r.name == 'Moderator');
   await botLogChannel.send(`📥 <@${req.user.id}> added **${botUser.tag}** (<@&${modRole.id}>)`);
   await ownerUser.send(`📥 Your bot **${botUser.tag}** has been added to the queue! Please wait for a moderator to review it.`);
 
@@ -67,7 +66,7 @@ router.delete('/:id', async (req, res) => {
 
   await r.table('bots').get(req.params.id).delete().run();
 
-  let botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
+  let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
   await botLogChannel.send(`📤 <@${req.user.id}> deleted ${bot.tag}`);
 
   let ownerUser = await client.users.fetch(req.user.id);
@@ -80,6 +79,8 @@ router.get('/', async (req, res) => {
   let botsFromDatabase = await r.table('bots').run();
   res.json(botsFromDatabase.map(bot => safeBot(bot)));
 });
+
+// TODO: add endpoints for bots for homepage - /featured, /trending, /top, /new - limit response to 12 bots?
 
 router.get('/featured', async (req, res) => {
   let featuredBots = await r.table('bots').filter({ featured: true }).run();
@@ -109,8 +110,8 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
 
   await r.table('bots').get(bot.id).update(data).run();
 
-  let botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
-  let modRole = client.guilds.get(config.mainGuild).roles.find(r => r.name == 'Moderator');
+  let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
+  let modRole = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).roles.find(r => r.name == 'Moderator');
   await botLogChannel.send(`📝 <@${req.user.id}> edited **${botUser.tag}** (reverify, <@&${modRole.id}>)`);
 
   res.sendStatus(200);
@@ -123,10 +124,10 @@ router.post('/:id/verify', async (req, res) => {
   if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
   await r.table('bots').get(req.params.id).update({ verified: req.query.verified, verifiedAt: Date.now(), verifiedBy: req.user.id }).run();
   if (!JSON.parse(req.query.verified)) await r.table('bots').get(req.params.id).delete().run();
-  let botLogChannel = client.guilds.get(config.mainGuild).channels.find(c => c.name == 'bot-log');
-  await botLogChannel.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} <@${req.user.id}> ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'} **${bot.tag}** by <@${bot.ownerId}>`);
+  let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
+  await botLogChannel.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} <@${req.user.id}> ${JSON.parse(req.query.verified) ? 'verified' : 'rejected'} **${bot.tag}** by <@${bot.ownerId}>`);
   let ownerUser = await client.users.fetch(bot.ownerId);
-  await ownerUser.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} Your bot **${bot.tag}** has been ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'}`);
+  await ownerUser.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} Your bot **${bot.tag}** has been ${JSON.parse(req.query.verified) ? 'verified' : 'rejected'}`);
   res.json({ verified: req.query.verified });
 });
 
