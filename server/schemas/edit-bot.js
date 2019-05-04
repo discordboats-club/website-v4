@@ -1,4 +1,4 @@
-const Joi = require('joi');
+var Joi = require('joi');
 
 module.exports = Joi.object().required().keys({
     prefix: Joi.string().max(10),

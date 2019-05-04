@@ -1,17 +1,18 @@
-const express = require('express');
-const config = require('../config.json');
-const jwt = require('jsonwebtoken');
-const { r, jwtKey } = require('../');
-const fetch = require('node-fetch');
-const router = module.exports = express.Router();
-const btoa = require('btoa');
+var express = require('express');
+var config = require('../config.json');
+var jwt = require('jsonwebtoken');
+var fetch = require('node-fetch');
+var btoa = require('btoa');
+const { r, JWT_KEY } = require('../');
+
+var router = module.exports = express.Router();
 
 router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify%20email`));
 
 router.get('/callback', async (req, res) => {
     if (!req.query.code) return res.sendStatus(400);
-    const creds = btoa(`${config.clientID}:${config.clientSecret}`);
-    const accessResponse = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${encodeURIComponent(config.callbackURL)}`, 
+    let creds = btoa(`${config.clientID}:${config.clientSecret}`);
+    let accessResponse = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${encodeURIComponent(config.callbackURL)}`, 
     {
         method: 'POST',
         headers: {
@@ -20,17 +21,17 @@ router.get('/callback', async (req, res) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     });
-    const access = await accessResponse.json();
+    let access = await accessResponse.json();
     if (access.error) return res.sendStatus(500);
 
-    const userResponse = await fetch(`https://discordapp.com/api/users/@me`, 
+    let userResponse = await fetch(`https://discordapp.com/api/users/@me`, 
     {
         headers: {
             'Authorization': `Bearer ${access.access_token}`,
             'User-Agent': 'discordboats.club/2.0 (https://discordboats.club)'
         }
     });
-    const user = await userResponse.json();
+    let user = await userResponse.json();
 
     if (!await r.table('users').get(user.id).run()) {
         await r.table('users').insert({
@@ -62,6 +63,6 @@ router.get('/callback', async (req, res) => {
             discordRT: access.refresh_token            
         }).run();
     }
-    const jwtToken = await jwt.sign(user.id, jwtKey);
-    res.send(`<script>opener.postMessage('${jwtToken}', '${config.assetURL + '/dashboard'}'); close();</script>`);
+    const JWT_TOKEN = await jwt.sign(user.id, JWT_KEY);
+    res.send(`<script>opener.postMessage('${JWT_TOKEN}', '${config.assetURL + '/dashboard'}'); close();</script>`);
 });

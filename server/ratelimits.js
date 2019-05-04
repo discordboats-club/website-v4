@@ -1,4 +1,4 @@
-const ratelimit = require('express-rate-limit');
+var ratelimit = require('express-rate-limit');
 
 exports.editBotLimiter = ratelimit({
     windowMs: 45000,

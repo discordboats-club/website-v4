@@ -1,12 +1,12 @@
-const Joi = require('joi');
-const fetch = require('node-fetch');
+var Joi = require('joi');
+var fetch = require('node-fetch');
 
-let badbots;
+var badbots;
 
 exports.getBadBots = async () => {
     if (!badbots) {
-        const res = await fetch('https://i.ronthecookie.me/badbots.txt');
-        const text = await res.text();
+        let res = await fetch('https://i.ronthecookie.me/badbots.txt');
+        let text = await res.text();
         badbots = await text.split('\n').map(e => e.split(' ')[0]);
         return badbots;
     } else {
@@ -15,7 +15,7 @@ exports.getBadBots = async () => {
 }
 
 exports.handleJoi = (req, res, schema) => {
-    const result = Joi.validate(req.body, schema);
+    let result = Joi.validate(req.body, schema);
     if (result.error) {
         if (!result.error.isJoi) {
             console.error(`Error while running Joi at ${Date.now()}: ${result.error}`);
@@ -30,7 +30,7 @@ exports.handleJoi = (req, res, schema) => {
 exports.libraries = ['discordcr', 'Discord.Net', 'DSharpPlus', 'dscord', 'DiscordGo', 'Discord4j', 'JDA', 'discord.js', 'Eris', 'Discordia', 'RestCord', 'Yasmin', 'discord.py', 'disco', 'discordrb', 'discord-rs', 'Sword'];
 
 exports.filterUnexpectedData = (subject, stuffToAdd, schema) => {
-    const data = Object.assign({}, stuffToAdd);
+    let data = Object.assign({}, stuffToAdd);
     Object.keys(schema.describe().children).forEach(key => {
         data[key] = subject[key];
     });

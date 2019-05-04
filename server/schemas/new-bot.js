@@ -1,4 +1,4 @@
-const Joi = require('joi');
+var Joi = require('joi');
 
 module.exports = Joi.object().required().keys({
     id: Joi.string().min(10).max(26).regex(/\d./g).required(),
