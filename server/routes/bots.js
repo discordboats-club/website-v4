@@ -80,6 +80,8 @@ router.get('/', async (req, res) => {
   res.json(botsFromDatabase.map(bot => safeBot(bot)));
 });
 
+// TODO: add endpoints for bots for homepage - /featured, /trending, /top, /new - limit response to 12 bots?
+
 router.get('/featured', async (req, res) => {
   let featuredBots = await r.table('bots').filter({ featured: true }).run();
   res.json(featuredBots.map(bot => safeBot(bot)));
@@ -123,9 +125,9 @@ router.post('/:id/verify', async (req, res) => {
   await r.table('bots').get(req.params.id).update({ verified: req.query.verified, verifiedAt: Date.now(), verifiedBy: req.user.id }).run();
   if (!JSON.parse(req.query.verified)) await r.table('bots').get(req.params.id).delete().run();
   let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
-  await botLogChannel.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} <@${req.user.id}> ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'} **${bot.tag}** by <@${bot.ownerId}>`);
+  await botLogChannel.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} <@${req.user.id}> ${JSON.parse(req.query.verified) ? 'verified' : 'rejected'} **${bot.tag}** by <@${bot.ownerId}>`);
   let ownerUser = await client.users.fetch(bot.ownerId);
-  await ownerUser.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} Your bot **${bot.tag}** has been ${JSON.parse(req.query.verified) ? 'verified' : 'deleted'}`);
+  await ownerUser.send(`${JSON.parse(req.query.verified) ? '🎉' : '😦'} Your bot **${bot.tag}** has been ${JSON.parse(req.query.verified) ? 'verified' : 'rejected'}`);
   res.json({ verified: req.query.verified });
 });
 

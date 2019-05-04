@@ -26,6 +26,22 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
   next();
 });
 
+// TODO: improve error responses, use 204 when supposed to
+// TODO: revamp permission system
+// TODO: use JWT for bot api keys
+// TODO: add endpoint to regen api key
+// TODO: use camelCase for schema file names
+// TODO: route files are too long - let's organise the endpoints
+// TODO: bot upvotes
+// TODO: GDPR request data endpoint
+// TODO: more API libraries?
+// TODO: search bots
+// TODO: manage todo list better
+// TODO: PATCH /users/@me
+// TODO: bot tags
+// TODO: add featured true/false to PATCH /bots
+// TODO: api docs
+// TODO: discord bot lookup features
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/bots', require('./routes/bots.js'));
 app.use('/api/users', require('./routes/users.js'));
