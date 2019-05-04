@@ -64,5 +64,5 @@ router.get('/callback', async (req, res) => {
   }
   
   const JWT_TOKEN = await jwt.sign(user.id, JWT_KEY);
-  // TODO: respond with token
+  res.json({ token: JWT_TOKEN });
 });
