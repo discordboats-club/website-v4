@@ -10,33 +10,8 @@
     margin: .5em 0;
 }
 
-@media(min-width:35em) {
-    .col {
-        display: table-cell;
-    }
-    .\31 {
-        width: 5%;
-    }
-    .\33 {
-        width: 22%;
-    }
-    .\34 {
-        width: 30%;
-    }
-    .\35 {
-        width: 40%;
-    }
-    .\32 {
-        width: 15%;
-    }
-    .row {
-        display: table;
-        border-spacing: 1em 0;
-    }
-}
 
-.w-100,
-.row {
+.w-100 {
     width: 100%;
 }
 
