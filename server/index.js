@@ -8,7 +8,7 @@ var app = express();
 // constants
 module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v4' });
 const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('jwt.key').toString();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 var client = require('./client.js');
 client.login(config.token);
