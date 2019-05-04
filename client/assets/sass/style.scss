@@ -20,8 +20,11 @@ body {
 
 * {
     font-family: $font;
+    color: white;
 }
 
 .navbar-img {
-    width: 2vw;
+    width: 38px;
+    height: 33px;
 }
+@import "bots.scss";

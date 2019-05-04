@@ -7,7 +7,7 @@ app.set("view engine", "ejs");
 
 app.use(require("./routes/"));
 app.use(express.static("static"));
-app.use(proxy("http://localhost:"+srvPort));
+app.use(proxy("http://localhost:" + srvPort));
 
 app.use((req, res) => {
     res.sendStatus(404);
