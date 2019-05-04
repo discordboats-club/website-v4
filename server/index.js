@@ -19,10 +19,10 @@ app.use(express.json());
 app.use(logger('dev'));
 
 app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }), async (req, res, next) => {
-    if (!req.user) return next();
-    let user = await r.table('users').get(req.user).run(); //req.user is the user id
-    req.user = user; //now req.user is the user object
-    next();
+  if (!req.user) return next();
+  let user = await r.table('users').get(req.user).run(); //req.user is the user id
+  req.user = user; //now req.user is the user object
+  next();
 });
 
 app.use('/api/auth', require('./routes/auth.js'));
