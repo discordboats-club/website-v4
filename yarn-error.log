@@ -1,0 +1,40 @@
+Arguments: 
+  /home/ron/.nvm/versions/node/v11.0.0/bin/node /usr/bin/yarn add concurrently
+
+PATH: 
+  /home/ron/.yarn/bin:/home/ron/.yarn/bin:/home/ron/.nvm/versions/node/v11.0.0/bin:/home/ron/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/ron/go/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/ron/go/bin:/home/ron/go/bin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  11.0.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/ron/git/bulmaboats/package.json: Unexpected token } in JSON at position 228
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "discordboats",
+    "version": "4.0.0",
+    "description": "Discordboats",
+    "main": "index.js",
+    "repository": "git@github.com:discordboats-club/website-v4.git",
+    "author": "discordboats team",
+    "license": "MIT",
+    
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
