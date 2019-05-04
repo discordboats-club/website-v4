@@ -111,7 +111,7 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
   await r.table('bots').get(bot.id).update(data).run();
 
   let botLogChannel = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).channels.find(c => c.name == 'bot-log');
-  let modRole = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).roles.find(r => r.name == 'Moderator');
+  let modRole = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).roles.get(process.env.DISCORD_ROLE_MODERATOR_ID);
   await botLogChannel.send(`📝 <@${req.user.id}> edited **${botUser.tag}** (reverify, <@&${modRole.id}>)`);
 
   res.sendStatus(200);
