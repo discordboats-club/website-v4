@@ -13,6 +13,8 @@
     "server": "cd server; yarn start",
     "postinstall": "cd server && yarn && cd ../client && yarn && cd ..",
     "client": "cd client; yarn start",
-    "start": "concurrently yarn:server yarn:client"
+    "clientdev": "cd client; yarn dev",
+    "start": "concurrently yarn:server yarn:client",
+    "dev": "concurrently yarn:clientdev yarn:server"
   }
 }
