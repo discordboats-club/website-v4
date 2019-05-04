@@ -1,0 +1,11 @@
+{
+    "clientID": "",
+    "clientSecret": "",
+    "token": "",
+    "callbackURL": "",
+    "assetURL": "",
+    "apiURL": "",
+
+    "mainGuild": "",
+    "secondaryGuild": ""
+}
