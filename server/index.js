@@ -2,7 +2,6 @@ require('dotenv').config();
 var express = require('express');
 var fs = require('fs');
 var logger = require('morgan');
-var config = require('./config.json');
 
 var app = express();
 
@@ -12,7 +11,7 @@ const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('jwt.key').toString();
 const PORT = process.env.PORT || 3001;
 
 var client = require('./client.js');
-client.login(config.token);
+client.login(process.env.DISCORD_CLIENT_TOKEN);
 
 app.enable('trust proxy');
 app.use(require('cloudflare-express').restore()); // so we can get their real ip
