@@ -7,7 +7,7 @@ const { r, JWT_KEY } = require('../');
 
 var router = module.exports = express.Router();
 
-router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify%20email`));
+router.get('/login', (req, res) => res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${config.clientID}&redirect_uri=${encodeURIComponent(config.callbackURL)}&response_type=code&scope=identify%20email&prompt=none`));
 
 router.get('/callback', async (req, res) => {
   if (!req.query.code) return res.sendStatus(400);
