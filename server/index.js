@@ -42,6 +42,7 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
 // TODO: add featured true/false to PATCH /bots
 // TODO: api docs
 // TODO: discord bot lookup features
+// TODO: auto create rdb tables
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/bots', require('./routes/bots.js'));
 app.use('/api/users', require('./routes/users.js'));
