@@ -12,7 +12,6 @@ module.exports = class Backend {
         })).json();
     }
     async getUser(id = "@me") {
-        console.log(await this.getJSON(`${srvURL}/api/users/${id}`));
-        // return await this.getJSON(`${srvURL}/api/users/${id}`);
+        return await this.getJSON(`${srvURL}/api/users/${id}`);
     }
 };
