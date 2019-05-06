@@ -6,7 +6,7 @@ var logger = require('morgan');
 var app = express();
 
 // constants
-var r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v4' });
+var r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v4', port: process.env.RETHINKDB_PORT || 28015, host: process.env.RETHINKDB_HOST || 'localhost' });
 const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('jwt.key').toString();
 const PORT = process.env.PORT || 3001;
 
