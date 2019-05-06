@@ -1,3 +1,12 @@
 .bot-card {
     background: $darker-color;
 }
+.bot-container {
+    max-width: 90em;
+    padding: 1em;
+    margin: auto;
+    font: 1em/1.6 $font;
+}
+.bot-img {
+    max-width: 15vw;
+}
