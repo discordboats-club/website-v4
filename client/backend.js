@@ -7,9 +7,8 @@ module.exports = class Backend {
         this.token = token;
     }
     async getJSON(url) {
-        console.log(this.token, url)
         return await (await fetch(url, {
-            headers: { Authentication: `Bearer ${this.token}` }
+            headers: { authorization: `Bearer ${this.token}` }
         })).json();
     }
     async getUser(id = "@me") {
