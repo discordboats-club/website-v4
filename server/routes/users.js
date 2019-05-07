@@ -18,5 +18,5 @@ router.delete('/@me', async (req, res) => {
     await r.table('bots').delete(bot.id).run();
   });
   await r.table('users').delete(req.user.id).run();
-  res.sendStatus(200);
+  res.sendStatus(204);
 });

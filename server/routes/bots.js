@@ -72,7 +72,7 @@ router.delete('/:id', async (req, res) => {
   let ownerUser = await client.users.fetch(req.user.id);
   if (ownerUser) ownerUser.send(`📤 Your bot **${bot.tag}** has been deleted by <@${req.user.id}>`);
 
-  res.sendStatus(200);
+  res.sendStatus(204);
 });
 
 router.get('/', async (req, res) => {
@@ -114,7 +114,7 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
   let modRole = client.guilds.get(process.env.DISCORD_GUILD_MAIN_ID).roles.get(process.env.DISCORD_ROLE_MODERATOR_ID);
   await botLogChannel.send(`📝 <@${req.user.id}> edited **${botUser.tag}** (reverify, <@&${modRole.id}>)`);
 
-  res.sendStatus(200);
+  res.sendStatus(204);
 });
 
 router.post('/:id/verify', async (req, res) => {
@@ -138,5 +138,5 @@ router.post('/:id/stats', async (req, res) => {
   if (!req.headers.authorization) return res.sendStatus(401);
   if (bot.apiKey !== req.headers.authorization.split(' ')[1]) return res.sendStatus(403);
   await r.table('bots').get(req.params.id).update({ guildCount: req.body.guildCount });
-  res.sendStatus(200);
+  res.sendStatus(204);
 });
