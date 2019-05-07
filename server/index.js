@@ -6,8 +6,14 @@ var logger = require('morgan');
 var app = express();
 
 // constants
-const r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v4', port: process.env.RETHINKDB_PORT || 28015, host: process.env.RETHINKDB_HOST || 'localhost' });
-const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('keys/jwt.key').toString();
+const r = (module.exports.r = require('rethinkdbdash')({
+  db: 'discordboatsclub_v4',
+  port: process.env.RETHINKDB_PORT || 28015,
+  host: process.env.RETHINKDB_HOST || 'localhost'
+}));
+const JWT_KEY = (module.exports.JWT_KEY = fs
+  .readFileSync('keys/jwt.key')
+  .toString());
 const PORT = process.env.PORT || 3001;
 
 var client = require('./client');
@@ -19,12 +25,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
-app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }), async (req, res, next) => {
-  if (!req.user) return next();
-  let user = await r.table('users').get(req.user).run(); //req.user is the user id
-  req.user = user; //now req.user is the user object
-  next();
-});
+app.use(
+  require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
+  async (req, res, next) => {
+    if (!req.user) return next();
+    let user = await r
+      .table('users')
+      .get(req.user)
+      .run(); //req.user is the user id
+    req.user = user; //now req.user is the user object
+    next();
+  }
+);
 
 // TODO: improve error responses, use 204 when supposed to
 // TODO: revamp permission system
@@ -44,6 +56,7 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
 // TODO: discord bot lookup features
 // TODO: auto create rdb tables
 // TODO: hash IP addresses
+// TODO: make code readable
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/bots', require('./routes/bots'));
 app.use('/api/users', require('./routes/users'));
