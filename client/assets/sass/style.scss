@@ -26,6 +26,10 @@ body {
 
 .navbar-img {
     width: 38px;
-    height: 33px;
+    // height: 33px;
+}
+
+.circle {
+    border-radius: 50%;
 }
 @import "bots.scss";
