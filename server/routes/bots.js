@@ -1,12 +1,12 @@
 var express = require('express');
-var createBotSchema = require('../schemas/createBot.js');
-var editBotSchema = require('../schemas/editBot.js');
-var postBotStats = require('../schemas/postBotStats.js');
+var createBotSchema = require('../schemas/createBot');
+var editBotSchema = require('../schemas/editBot');
+var postBotStats = require('../schemas/postBotStats');
 var randomString = require('randomstring');
-var { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util.js');
-var { editBotLimiter } = require('../ratelimits.js');
+var { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util');
+var { editBotLimiter } = require('../ratelimits');
 var { r } = require('../');
-var client = require('../client.js');
+var client = require('../client');
 
 var router = module.exports = express.Router();
 

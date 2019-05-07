@@ -10,7 +10,7 @@ var r = module.exports.r = require('rethinkdbdash')({ db: 'discordboatsclub_v4',
 const JWT_KEY = module.exports.JWT_KEY = fs.readFileSync('keys/jwt.key').toString();
 const PORT = process.env.PORT || 3001;
 
-var client = require('./client.js');
+var client = require('./client');
 client.login(process.env.DISCORD_CLIENT_TOKEN);
 
 app.enable('trust proxy');
@@ -43,8 +43,8 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
 // TODO: api docs
 // TODO: discord bot lookup features
 // TODO: auto create rdb tables
-app.use('/api/auth', require('./routes/auth.js'));
-app.use('/api/bots', require('./routes/bots.js'));
-app.use('/api/users', require('./routes/users.js'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/bots', require('./routes/bots'));
+app.use('/api/users', require('./routes/users'));
 
 app.listen(PORT, () => console.log('[web] listening on port ' + PORT));
