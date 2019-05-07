@@ -4,19 +4,10 @@
         <%- include("parts/head.ejs"); %>
     </head>
     <body>
-        <%- include("parts/nav.ejs") %>
-        <main>
-            <div class="bots row ph2 pv1">
-                <div class="ph2 pv1 col-xs-4 bot-card">
-                    <h4>bot.name</h4>
-                    <p
-                        >Bot bot is officiis sequi qui sunt et eos velit
-                        reiciendis. Accusamus molestiae rerum error tempore odio
-                        mollitia incidunt sequi. Sed quae exercitationem nobis
-                        dolore voluptas rerum itaque tempore.</p
-                    >
-                </div>
-            </div>
+        <%- include("parts/nav.ejs", {user}) %>
+        <main class="bot-container">
+            <h2 class="ml1">Trending Bots</h2>
+            <%- include("parts/botRow.ejs") %>
         </main>
     </body>
 </html>

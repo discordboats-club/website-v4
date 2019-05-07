@@ -7,10 +7,12 @@
     "license": "MIT",
     "dependencies": {
         "autoprefixer": "^9.5.1",
+        "cookie-parser": "^1.4.4",
         "ejs": "^2.6.1",
         "express": "^4.16.3",
         "express-http-proxy": "^1.5.1",
         "helmet": "^3.16.0",
+        "node-fetch": "^2.5.0",
         "node-sass": "^4.12.0",
         "postcss-cli": "^6.1.2",
         "rethinkdbdash": "^2.3.31"
