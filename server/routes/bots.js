@@ -17,12 +17,12 @@ var client = require('../client');
 var router = (module.exports = express.Router());
 
 router.post('/', async (req, res) => {
-  if (!req.user) return res.sendStatus(401);
+  if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
   if (!handleJoi(req, res, createBotSchema)) return;
 
   let badBots = await getBadBots();
   if (badBots.includes(req.body.id))
-    return res.status(403).json({ error: 'This bot is blacklisted' });
+    return res.status(403).json({ error: 'Blacklisted bot' });
 
   if (
     req.body.github &&
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
   )
     return res.status(400).json({ error: 'Invalid GitHub URL' });
   if (req.body.library && !libraries.includes(req.body.library))
-    return res.status(400).json({ error: 'Invalid library' });
+    return res.status(400).json({ error: 'Invalid library' }); //TODO: allow 'Other' library
 
   let botUser =
     client.users.get(req.body.id) || (await client.users.fetch(req.body.id));
@@ -90,7 +90,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  if (!req.user) return res.sendStatus(401);
+  if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
   if (!req.params.id) return res.sendStatus(400);
   let bot = await r
     .table('bots')
@@ -98,7 +98,7 @@ router.delete('/:id', async (req, res) => {
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
   // TODO: allow moderators to delete bots (i need to make a permission system first)
-  if (bot.ownerId !== req.user.id) return res.sendStatus(403);
+  if (bot.ownerId !== req.user.id) return res.status(403).json({ error: 'You can only delete bots you own' })
 
   await r
     .table('bots')
@@ -145,7 +145,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.patch('/:id', editBotLimiter, async (req, res) => {
-  if (!req.user) return res.sendStatus(401);
+  if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
   if (!handleJoi(req, res, editBotSchema)) return;
 
   let bot = await r
@@ -153,7 +153,7 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
     .get(req.params.id)
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
-  if (bot.ownerId !== req.user.id) return res.sendStatus(403);
+  if (bot.ownerId !== req.user.id) return res.status(403).json({ error: 'You can only edit bots you own' });
 
   let data = filterUnexpectedData(req.body, { verified: false }, editBotSchema);
 
@@ -194,8 +194,9 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
 
 // TODO: block multiple verification for same bot
 router.post('/:id/verify', async (req, res) => {
-  if (!req.user || !req.user.flags.includes('moderator'))
-    return res.sendStatus(403);
+  if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
+  if (!req.user.flags.includes('moderator'))
+    return res.status(403).json({ error: 'Insufficient permission' });
   if (req.query.verified == null) return res.sendStatus(400);
   let verified = JSON.parse(req.query.verified);
 
@@ -249,9 +250,9 @@ router.post('/:id/stats', async (req, res) => {
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
 
-  if (!req.headers.authorization) return res.sendStatus(401);
+  if (!req.headers.authorization) return res.header('WWW-Authenticate', 'API-Key').sendStatus(401);
   if (bot.apiKey !== req.headers.authorization.split(' ')[1])
-    return res.sendStatus(403);
+    return res.status(403).json({ error: 'Invalid API key' });
 
   await r
     .table('bots')

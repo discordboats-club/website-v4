@@ -15,7 +15,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.delete('/@me', async (req, res) => {
-  if (!req.user) return res.sendStatus(401);
+  if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
   var ownedBots = await r.table('bots').filter({ ownerId: req.user.id });
   ownedBots.forEach(async (bot) => {
     await r
