@@ -38,12 +38,9 @@ app.use(
   }
 );
 
-// TODO: improve error responses, use 204 when supposed to
 // TODO: revamp permission system
 // TODO: use JWT for bot api keys
 // TODO: add endpoint to regen api key
-// TODO: use camelCase for schema file names
-// TODO: route files are too long - let's organise the endpoints
 // TODO: bot upvotes
 // TODO: GDPR request data endpoint
 // TODO: more API libraries?
@@ -55,8 +52,7 @@ app.use(
 // TODO: api docs
 // TODO: discord bot lookup features
 // TODO: auto create rdb tables
-// TODO: hash IP addresses
-// TODO: make code readable
+// TODO: let moderators edit bots, delete bots
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/bots', require('./routes/bots'));
 app.use('/api/users', require('./routes/users'));
