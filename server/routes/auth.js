@@ -13,22 +13,22 @@ router.get('/callback', async (req, res) => {
   let creds = btoa(`${process.env.DISCORD_CLIENT_ID}:${process.env.DISCORD_CLIENT_SECRET}`);
   let accessResponse = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${encodeURIComponent(process.env.OAUTH_CALLBACK_URL)}`,
   {
-  method: 'POST',
-  headers: {
-    'Authorization': `Basic ${creds}`,
-    'User-Agent': 'discordboats.club/4.0 (https://github.com/discordboats-club/website-v4)',
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
+    method: 'POST',
+    headers: {
+      'Authorization': `Basic ${creds}`,
+      'User-Agent': 'discordboats.club/4.0 (https://github.com/discordboats-club/website-v4)',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   });
   let access = await accessResponse.json();
   if (access.error) return res.sendStatus(500);
 
   let userResponse = await fetch(`https://discordapp.com/api/users/@me`,
   {
-  headers: {
-    'Authorization': `Bearer ${access.access_token}`,
-    'User-Agent': 'discordboats.club/2.0 (https://discordboats.club)'
-  }
+    headers: {
+      'Authorization': `Bearer ${access.access_token}`,
+      'User-Agent': 'discordboats.club/2.0 (https://discordboats.club)'
+    }
   });
   let user = await userResponse.json();
 
