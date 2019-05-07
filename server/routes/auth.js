@@ -31,6 +31,7 @@ router.get('/callback', async (req, res) => {
     }
   });
   let user = await userResponse.json();
+  if (!user.email) res.status(400).json({ error: 'Email scope not included' });
 
   if (!await r.table('users').get(user.id).run()) {
     await r.table('users').insert({
@@ -42,7 +43,6 @@ router.get('/callback', async (req, res) => {
       discrim: user.discriminator,
       flags: [],
 
-      ips: [req.cf_ip],
       email: user.email,
 
       discordAT: access.access_token,
