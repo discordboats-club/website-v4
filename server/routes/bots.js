@@ -1,6 +1,7 @@
 var express = require('express');
-var newBotSchema = require('../schemas/new-bot.js');
-var editBotSchema = require('../schemas/edit-bot.js');
+var createBotSchema = require('../schemas/createBot.js');
+var editBotSchema = require('../schemas/editBot.js');
+var postBotStats = require('../schemas/postBotStats.js');
 var randomString = require('randomstring');
 var { handleJoi, libraries, filterUnexpectedData, safeBot, getBadBots } = require('../util.js');
 var { editBotLimiter } = require('../ratelimits.js');
@@ -11,7 +12,7 @@ var router = module.exports = express.Router();
 
 router.post('/', async (req, res) => {
   if (!req.user) return res.sendStatus(401);
-  if (!handleJoi(req, res, newBotSchema)) return;
+  if (!handleJoi(req, res, createBotSchema)) return;
 
   let badBots = await getBadBots();
   if (badBots.includes(req.body.id)) return res.status(403).json({ error: 'ValidationError', details: ['This bot is blacklisted']});
@@ -43,7 +44,7 @@ router.post('/', async (req, res) => {
       verified: null,
       verifiedAt: null,
       verifiedBy: null
-    }, newBotSchema
+    }, createBotSchema
   );
 
   await r.table('bots').insert(bot);
@@ -132,7 +133,7 @@ router.post('/:id/verify', async (req, res) => {
 });
 
 router.post('/:id/stats', async (req, res) => {
-  if (!handleJoi(req, res, newBotSchema)) return;
+  if (!handleJoi(req, res, postBotStats)) return;
   let bot = await r.table('bots').get(req.params.id).run();
   if (!bot) return res.status(404).json({ error: 'BotRetrievalError', details: ['Invalid bot'] });
   if (!req.headers.authorization) return res.sendStatus(401);
