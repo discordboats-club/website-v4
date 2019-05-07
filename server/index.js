@@ -43,6 +43,7 @@ app.use(require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
 // TODO: api docs
 // TODO: discord bot lookup features
 // TODO: auto create rdb tables
+// TODO: hash IP addresses
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/bots', require('./routes/bots'));
 app.use('/api/users', require('./routes/users'));
