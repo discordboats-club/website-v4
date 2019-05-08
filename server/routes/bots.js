@@ -163,11 +163,11 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
   )
     return res
       .status(400)
-      .json({ error: 'ValidationError', details: ['Invalid Github URL'] });
+      .json({ error: 'Invalid Github URL' });
   if (req.body.library && !libraries.includes(req.body.library))
     return res
       .status(400)
-      .json({ error: 'ValidationError', details: ['Invalid library'] });
+      .json({ error: 'Invalid library' });
 
   let botUser = client.users.get(bot.id) || (await client.users.fetch(bot.id));
 
