@@ -26,7 +26,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.use(
-  require('express-jwt')({ secret: JWT_KEY, credentialsRequired: false }),
+  require('express-jwt')({
+    secret: JWT_KEY,
+    credentialsRequired: false,
+    getToken: (req) => {
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.split(' ')[0] === 'JWT'
+      ) {
+        return req.headers.authorization.split(' ')[1];
+      } else if (req.query && req.query.token) {
+        return req.query.token;
+      }
+      return null;
+    }
+  }),
   async (req, res, next) => {
     if (!req.user) return next();
     let user = await r
