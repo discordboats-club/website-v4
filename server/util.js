@@ -27,8 +27,7 @@ exports.handleJoi = (req, res, schema) => {
     res
       .status(400)
       .json({
-        error: result.error.name,
-        details: result.error.details.map((item) => item.message)
+        error: result.error.details.map((item) => item.message)[0]
       });
     return false;
   } else return true;
