@@ -97,8 +97,8 @@ router.delete('/:id', async (req, res) => {
     .get(req.params.id)
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
-  // TODO: allow moderators to delete bots (i need to make a permission system first)
-  if (bot.ownerId !== req.user.id) return res.status(403).json({ error: 'You can only delete bots you own' })
+  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('moderator')))
+    return res.status(403).json({ error: 'You can only delete bots you own' });
 
   await r
     .table('bots')
@@ -153,8 +153,8 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
     .get(req.params.id)
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
-  if (bot.ownerId !== req.user.id) return res.status(403).json({ error: 'You can only edit bots you own' });
-
+  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('moderator')))
+    return res.status(403).json({ error: 'You can only edit bots you own' });
   let data = filterUnexpectedData(req.body, { verified: false }, editBotSchema);
 
   if (
@@ -250,7 +250,8 @@ router.post('/:id/stats', async (req, res) => {
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
 
-  if (!req.headers.authorization) return res.header('WWW-Authenticate', 'API-Key').sendStatus(401);
+  if (!req.headers.authorization)
+    return res.header('WWW-Authenticate', 'API-Key').sendStatus(401);
   if (bot.apiKey !== req.headers.authorization.split(' ')[1])
     return res.status(403).json({ error: 'Invalid API key' });
 
