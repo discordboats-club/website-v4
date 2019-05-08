@@ -53,8 +53,8 @@ exports.libraries = [
   'Sword'
 ];
 
-exports.filterUnexpectedData = (subject, stuffToAdd, schema) => {
-  let data = Object.assign({}, stuffToAdd);
+exports.filterUnexpectedData = (subject, toAdd, schema) => {
+  let data = Object.assign({}, toAdd);
   Object.keys(schema.describe().children).forEach((key) => {
     data[key] = subject[key];
   });
