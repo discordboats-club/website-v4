@@ -97,7 +97,7 @@ router.delete('/:id', async (req, res) => {
     .get(req.params.id)
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
-  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('moderator')))
+  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('mod')))
     return res.status(403).json({ error: 'You can only delete bots you own' });
 
   await r
@@ -153,7 +153,7 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
     .get(req.params.id)
     .run();
   if (!bot) return res.status(404).json({ error: 'Invalid bot' });
-  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('moderator')))
+  if (!(bot.ownerId == req.user.id || !req.user.flags.includes('mod')))
     return res.status(403).json({ error: 'You can only edit bots you own' });
   let data = filterUnexpectedData(req.body, { verified: false }, editBotSchema);
 
@@ -195,7 +195,7 @@ router.patch('/:id', editBotLimiter, async (req, res) => {
 // TODO: block multiple verification for same bot
 router.post('/:id/verify', async (req, res) => {
   if (!req.user) return res.header('WWW-Authenticate', 'JWT').sendStatus(401);
-  if (!req.user.flags.includes('moderator'))
+  if (!req.user.flags.includes('mod'))
     return res.status(403).json({ error: 'Insufficient permission' });
   if (req.query.verified == null) return res.sendStatus(400);
   let verified = JSON.parse(req.query.verified);
