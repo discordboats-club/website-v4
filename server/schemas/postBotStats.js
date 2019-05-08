@@ -6,5 +6,4 @@ module.exports = Joi.object()
     guildCount: Joi.number()
       .positive()
       .required()
-    /* TODO: sharding support */
   });
