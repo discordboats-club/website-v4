@@ -64,7 +64,6 @@ exports.filterUnexpectedData = (subject, stuffToAdd, schema) => {
 exports.safeUser = (user) => {
   delete user.discordAT;
   delete user.discordRT;
-  delete user.ips;
   delete user.email;
   return user;
 };
