@@ -63,7 +63,6 @@ app.use(
 // TODO: add featured true/false to PATCH /bots
 // TODO: api docs
 // TODO: discord bot lookup features
-// TODO: let moderators edit bots, delete bots
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/bots', require('./routes/bots'));
 app.use('/api/users', require('./routes/users'));
